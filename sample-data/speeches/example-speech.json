@@ -1,0 +1,19 @@
+{
+  "speech_id": "example:001:R6-03-001:42",
+  "municipality_code": "999999",
+  "municipality_name": "サンプル市",
+  "tenant_slug": "example",
+  "council_id": "001",
+  "council_name": "本会議",
+  "schedule_id": "R6-03-001",
+  "schedule_name": "令和 6 年 3 月定例会 第 1 日",
+  "year": 2024,
+  "speech_order": 42,
+  "speaker_name": "サンプル議員",
+  "speaker_role": "member",
+  "body": "（dummy: 実際の speech 本文はここに入る。CC BY 4.0 対象外、著作権は各議会に帰属する。β 期間中は schema 構造の理解のみを目的とした dummy を提供する。）",
+  "body_length": 90,
+  "loaded_at": "2026-05-31T00:00:00Z",
+  "speech_type": "general-question",
+  "is_person_name": true
+}

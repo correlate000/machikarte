@@ -1,0 +1,63 @@
+# Sensitive
+.env
+.env.*
+*credentials*
+*secret*
+*token*
+*.pem
+*.p12
+*.key
+service-account*.json
+gcp-*.json
+
+# Local-only / private
+.claude/
+.isvd-quality-logs/
+docs/legal-review-*.md
+docs/_private/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+*.egg-info/
+
+# Node
+node_modules/
+.next/
+.vercel/
+dist/
+build/
+.turbo/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Logs
+*.log
+logs/
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+.obsidian/
+
+# Large data (use external storage)
+raw_data/
+data/
+site-data/
+site-data-full/
+data-backup/
+*.parquet
+*.arrow

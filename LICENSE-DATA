@@ -1,0 +1,33 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Copyright (c) 2026 一般社団法人 社会構想デザイン機構（ISVD）
+
+## 適用範囲
+
+このライセンス（CC BY 4.0）が適用される範囲:
+
+- 本リポジトリで提供する schema 定義（speeches テーブル等の列定義）
+- 集計値（年次推移、自治体別カウント等）
+- メタデータ（自治体識別子、tier 分類、council 構造等）
+- aggregation queries とその出力例
+- 構造化フィールド（speaker_role、speech_type 等のラベル定義）
+
+## 適用範囲外
+
+speech 本文（議事録テキスト原文）の再利用は本ライセンスの対象外です。
+speech 本文の著作権は各議会（地方自治体）に帰属します。
+speech 本文を引用・再配布する場合は、各自治体の議事録利用規約に従ってください。
+
+## ライセンス本文
+
+Full license text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+要旨:
+- 共有: あらゆる媒体・形式で複製・頒布できます
+- 翻案: リミックス・変形・素材を基に二次創作できます
+- 表示: 適切なクレジット表示、ライセンス情報のリンク、変更を加えた場合の明示が必要です
+- 追加の制限を加えてはなりません
+
+## クレジット表示例
+
+> Data from machikarte (https://isvd.or.jp/ja/machikarte), 一般社団法人 社会構想デザイン機構（ISVD）, CC BY 4.0
