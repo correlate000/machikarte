@@ -1,0 +1,287 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gikai-commons.isvd.or.jp/schema/coverage-v1.json",
+  "title": "議会コモンズ 収録範囲 v1",
+  "description": "https://gikai-commons.isvd.or.jp/coverage.json の形。どの議会をどこまで収録できているか、収録できていないものは何かを開示する。生成は scripts/build_coverage_json.py 。",
+  "type": "object",
+  "required": [
+    "version",
+    "generatedAt",
+    "publisher",
+    "license",
+    "totals",
+    "councils"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "version": {
+      "description": "この形の版。壊す変更のときだけ上げる。",
+      "type": "string"
+    },
+    "generatedAt": {
+      "description": "このファイルを書き出した時刻（協定世界時）。",
+      "type": "string"
+    },
+    "publisher": {
+      "type": "object",
+      "required": [
+        "name",
+        "service",
+        "url"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "service": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "license": {
+      "description": "構造・集計・メタデータの利用条件。発言の原文には当方の著作権が無く、各議会の公開条件に従う。",
+      "type": "object",
+      "required": [
+        "structuredData",
+        "url"
+      ],
+      "properties": {
+        "structuredData": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "totals": {
+      "type": "object",
+      "required": [
+        "councilsInScope",
+        "councilsWithSpeeches",
+        "councilsWithoutSpeeches",
+        "speeches",
+        "meetings",
+        "asOf"
+      ],
+      "properties": {
+        "councilsInScope": {
+          "description": "対象とする議会の数。北方領土 6 村を除いた数。",
+          "type": "integer"
+        },
+        "councilsWithSpeeches": {
+          "description": "発言の保存レコードが1件以上ある議会数の参考集計。取得進捗・網羅性・品質の主指標には使いません。",
+          "type": "integer"
+        },
+        "councilsWithoutSpeeches": {
+          "description": "発言ありと確認した議会数の補集合。未測定と集計済み0件の双方を含み、未取得・非公開・議論なしを断定する数ではありません。",
+          "type": "integer"
+        },
+        "councilsUnmeasured": {
+          "description": "保存断面で発言件数がnullの議会数。0件とは異なります。",
+          "type": "integer"
+        },
+        "councilsConfirmedZero": {
+          "description": "保存断面で発言件数を0件と集計した議会数。公開会議録や議論が存在しないことを示す数ではありません。",
+          "type": "integer"
+        },
+        "councilsWithSpeechesButNoMeetingList": {
+          "description": "発言はあるが会議の一覧を作れていない議会の数。",
+          "type": "integer"
+        },
+        "speeches": {
+          "type": "integer"
+        },
+        "meetings": {
+          "type": "integer"
+        },
+        "verifiedFullDepth": {
+          "description": "互換性のため残す旧方式の取得周の収束数。全保有・正確性・BQ取り込みの完了数ではありません。全国の進捗は/acquisition-progress.jsonを参照してください。",
+          "deprecated": true,
+          "type": "integer"
+        },
+        "asOf": {
+          "description": "この数字を数えた日。",
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "source": {
+          "description": "数字の出どころ別の議会数。",
+          "type": "object"
+        }
+      }
+    },
+    "meetingDatePrecision": {
+      "description": "会議の開催日をどこまで確定できているか。ID の発行条件（日まで確定した会議にだけ発行する）と対になる。",
+      "type": "object",
+      "required": [
+        "scope",
+        "day",
+        "month"
+      ],
+      "properties": {
+        "scope": {
+          "type": "string"
+        },
+        "day": {
+          "description": "原文で日まで確認できた会議の数。",
+          "type": "integer"
+        },
+        "month": {
+          "description": "月までしか確定できない会議の数。ID は発行せず保留にする。",
+          "type": "integer"
+        },
+        "dayRatio": {
+          "type": "number"
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "dataQuality": {
+      "description": "こちらで把握している中身の欠陥。隠さず件数と対象を載せる。使う側はここを見て除外できる。",
+      "type": "object",
+      "properties": {
+        "futureLatestYear": {
+          "description": "latestYear が生成日の年より先になっている議会。倉庫側の集計値の誤りで、その年の発言を収録しているという意味ではない。",
+          "type": "object",
+          "required": [
+            "count",
+            "lgcodes"
+          ],
+          "properties": {
+            "note": {
+              "type": "string"
+            },
+            "count": {
+              "type": "integer"
+            },
+            "lgcodes": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[0-9]{6}$"
+              }
+            }
+          }
+        },
+        "meetingCountBelowListed": {
+          "description": "meetings が meetingsListed より小さい議会。会議 ID の潰れで数え上げが縮んでいる。",
+          "type": "object",
+          "required": [
+            "count",
+            "lgcodes"
+          ],
+          "properties": {
+            "note": {
+              "type": "string"
+            },
+            "count": {
+              "type": "integer"
+            },
+            "lgcodes": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[0-9]{6}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "notProvided": {
+      "description": "設計上、提供しないもの。実装が遅れているのではない。",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "councils": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "lgcode",
+          "name",
+          "prefectureSlug",
+          "meetings",
+          "meetingListAvailable",
+          "countsAsOf",
+          "meetingsListed"
+        ],
+        "properties": {
+          "lgcode": {
+            "description": "総務省 全国地方公共団体コード 6 桁。",
+            "type": "string",
+            "pattern": "^[0-9]{6}$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "prefectureSlug": {
+            "type": "string"
+          },
+          "speeches": {
+            "description": "収録できている発言の数。まだ測っていない議会は null。0 と null は違う。",
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "meetings": {
+            "description": "倉庫側で数えた会議数。**会議 ID の潰れで実際より小さくなることがある**（dataQuality.meetingCountBelowListed 参照）。下限として使えない。",
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "earliestYear": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "latestYear": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "meetingListAvailable": {
+            "type": "boolean"
+          },
+          "countsAsOf": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+          },
+          "countsFrom": {
+            "description": "この数字をどこから取ったか。未測定の議会は null。",
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "倉庫",
+              "台帳",
+              null
+            ]
+          },
+          "meetingsListed": {
+            "description": "会議一覧に実際に載っている件数。meetings より確かな下限。",
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}

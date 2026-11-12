@@ -1,63 +1,52 @@
 # machikarte
 
-> A civic data platform that puts speech records from all 1,741 Japanese local assemblies into citizens' hands (beta)
+Public materials, code, specifications, and examples for reusing Japanese local assembly records through Gikai Commons.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Data License: CC BY 4.0](https://img.shields.io/badge/data-CC%20BY%204.0-blue.svg)](LICENSE-DATA)
-[![Status: Beta](https://img.shields.io/badge/status-beta-orange.svg)](STATUS.md)
+Gikai Commons provides a foundation for statements, original sources, citation, and reuse. Kousou 0 provides a place to understand a town's conditions, everyday issues, and policy history with sources. The two projects serve different purposes.
 
-## What machikarte is
+## Try the local example
 
-machikarte is a civic data infrastructure that makes speech records from every Japanese local assembly searchable, citable, and analyzable.
-Across 1,741 municipalities and roughly 126 million speech records, it follows the lineage of UK mySociety's TheyWorkForYou and US GovTrack — applied to Japanese local government for the first time at nationwide scale.
+Use Python3's standard library to read Nisshin City's coverage metadata from a fixed snapshot. Run this command from the repository root.
 
-The beta launches on June 5, 2026, with the full release scheduled for August 15, 2026.
-During beta, we expand coverage, add features, and verify the data together with users.
+```sh
+python3 reuse-kit/inspect_coverage.py --code 232301
+```
 
-## Why open
+The example does not use the network, a database, or an AI model. Its JSON output describes the municipality, reference dates, endpoints of the recorded year range, version, missing information, and reuse conditions. Output keys are Japanese. It does not search speech text or demonstrate a RAG answer.
 
-To make local assembly debate visible, transparency and reproducibility are prerequisites.
-Publishing the schema, aggregation queries, and computed values opens the platform to secondary use, academic research, and citizen oversight.
+Read the [instructions](reuse-kit/README.txt) and [snapshot manifest](reuse-kit/examples/commons-snapshot/manifest.json). File hashes verify that the snapshot matches its manifest. Keep generation dates separate from the years and reference dates of the underlying values.
 
-Operated by the Institute for Social Vision Design (ISVD), a Japanese non-profit. Code and data are both open.
+## Materials in this repository
 
-## Beta status
+- `reuse-kit/`: a minimal local coverage-metadata example.
+- `docs/`: format and methodology documents.
+- `aggregation-queries/`: aggregation queries.
+- `sample-data/`: illustrative samples.
 
-- National scope: 1,741 municipalities
-- Data ingested: ~1,200 municipalities (of which 1,170 have ≥5,000 records each)
-- Total speech records: ~126 million
-- Details: [STATUS.md](STATUS.md) (manually updated weekly during beta)
+Check the period, version, and terms for each material. Year-range endpoints, stored-record counts, and small verification samples do not establish complete coverage or text quality. [STATUS.md](STATUS.md) distinguishes acquisition and verification, including whether they use the same meeting inventory as their denominator.
 
-Coverage is partial, features are still landing, and individual-legislator profiles will roll out incrementally.
+Project pages: [Gikai Commons](https://gikai-commons.isvd.or.jp/) and [Kousou 0](https://kousou0.isvd.or.jp/). The terms of this repository, the sites, and individually supplied datasets must be checked separately.
 
-## Try it
+## Sources and IDs
 
-- Beta site: <https://isvd.or.jp/en/machikarte>
-- Launch article: "When did 'AI' and 'generative AI' enter local assembly debate? A nationwide time-series across 1,741 municipalities" (published with the beta)
+For citation or correction, retain the meeting, date, dataset version, field name and ID, and the location in the original source. Existing IDs can have different numbers of separators depending on the acquisition system. Do not rewrite IDs by removing separators.
 
-## Contributing
+This minimal example reads coverage metadata. The included ID specification is a frozen draft; its compatibility with the current route-input checks requires separate confirmation. See [the ID note](reuse-kit/ID-NOTE.txt).
 
-Three paths:
+## Licensing and individual support
 
-1. **File an issue**: bug reports, feature requests, data correction requests
-2. **Send a pull request**: docs improvements, schema proposals, aggregation queries
-3. **Send us information**: assemblies outside our current scope, unusual minute formats, research collaborations — write to `contact@isvd.or.jp`
+- Code: [MIT License](LICENSE), subject to its notice requirements.
+- Generated data, specifications, and aggregates supplied in this repository: CC BY 4.0 within the scope stated in [LICENSE-DATA](LICENSE-DATA).
+- Original minutes: not collectively relicensed under that data license. Check the terms of each source.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for details and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for community norms.
+Use of the public materials does not require research collaboration, referrals, feedback, or a paid support contract. Individual research, material preparation, implementation, or operation support requires a separate agreement on scope, work, responsibility, and fees. Adoption of open source and paid work received by ISVD are separate outcomes.
 
-We respond in whichever language you use.
+## Corrections and contributions
 
-## License
+Identify the file and version, ID or location, issue, and supporting source when reporting a correction. Do not put personal information, nonpublic originals, or credentials into a public issue.
 
-- Code: [MIT License](LICENSE)
-- Data (schema, aggregates, metadata): [CC BY 4.0](LICENSE-DATA)
-- Speech text: Copyright belongs to each local assembly; follow each municipality's minutes-of-record terms when reusing speech text.
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
-## Contact
-
-Institute for Social Vision Design (ISVD)
-<contact@isvd.or.jp>
-
----
+Operated by the Institute for Social Vision Design (ISVD) / contact@isvd.or.jp
 
 日本語版: [README.md](README.md)

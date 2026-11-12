@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gikai-commons.isvd.or.jp/schema/id-v1.json",
+  "title": "議会コモンズ ID 体系 v1",
+  "description": "全国地方議会発言データベース「議会コモンズ」が発行する ID の形。仕様書は https://gikai-commons.isvd.or.jp/ids 。発行後の ID は変更しない。",
+  "$comment": "この版はドラフト（v1.0-draft4）。新 ID の発行はまだ始めておらず、いま発行しているのは legacyUtteranceId のみ。",
+  "$defs": {
+    "lgcode": {
+      "title": "自治体コード",
+      "description": "総務省 全国地方公共団体コード 6 桁（検査数字を含む）。独自採番はしない。",
+      "type": "string",
+      "pattern": "^[0-9]{6}$"
+    },
+    "councilId": {
+      "title": "議会 ID",
+      "description": "自治体コードと 1 対 1。",
+      "$ref": "#/$defs/lgcode"
+    },
+    "meetingTypeSlug": {
+      "title": "会議種別",
+      "description": "sonota は逃がし枠。整理できた時点で語を足す（追加互換）。",
+      "type": "string",
+      "enum": ["teirei", "rinji", "iinkai", "tokubetsu", "giun", "zenkyo", "sonota"]
+    },
+    "meetingId": {
+      "title": "会議 ID",
+      "description": "自治体コード - 開催日 8 桁 - 種別 - 連番 2 桁。開催日が原文で日まで確認できた会議にだけ発行する。",
+      "type": "string",
+      "pattern": "^[0-9]{6}-[0-9]{8}-(teirei|rinji|iinkai|tokubetsu|giun|zenkyo|sonota)-[0-9]{2}$"
+    },
+    "utteranceId": {
+      "title": "発言 ID",
+      "description": "会議 ID + u + 連番 4 桁以上。1 万発言を超える会議は桁を増やさず自然に伸ばす。",
+      "type": "string",
+      "pattern": "^[0-9]{6}-[0-9]{8}-(teirei|rinji|iinkai|tokubetsu|giun|zenkyo|sonota)-[0-9]{2}-u[0-9]{4,}$"
+    },
+    "personId": {
+      "title": "議員（人物）ID",
+      "description": "p - ハッシュ 8 桁。ハッシュの入力は初出時の（議会コード・正規化した氏名・初出の会議 ID）。改姓・移籍があっても変えない。字面に議会コードを含めない（人は議会をまたぐため。所属は別表で持つ）。",
+      "type": "string",
+      "pattern": "^p-[0-9a-f]{8}$"
+    },
+    "sourceAnchor": {
+      "title": "原典への結びつけ",
+      "description": "発言 ID が指す本文を、原典で検証するための 5 欄。切り分けの版が変わっても発行済み ID は旧の text_hash を指し続ける。",
+      "type": "object",
+      "required": ["source_url", "text_hash", "extraction_ver"],
+      "properties": {
+        "source_url": { "type": "string" },
+        "source_document_id": { "type": ["string", "null"] },
+        "source_location": { "type": ["object", "string", "null"] },
+        "text_hash": { "type": "string" },
+        "extraction_ver": { "type": "string" }
+      }
+    },
+    "legacyUtteranceId": {
+      "title": "レガシー発言 ID",
+      "description": "取得の仕組み由来の現行形式。恒久の別名として発行し、新 ID 導入後も解決し続ける。",
+      "type": "string",
+      "pattern": "^[0-9]{6}_[0-9A-Za-z]+_[0-9]+$"
+    },
+    "anyUtteranceId": {
+      "title": "発言 ID（新旧どちらも）",
+      "description": "恒久リンク /utterance/{id} が受理する形。新旧の両方を受理する。",
+      "oneOf": [
+        { "$ref": "#/$defs/utteranceId" },
+        { "$ref": "#/$defs/legacyUtteranceId" }
+      ]
+    },
+    "crosswalkRow": {
+      "title": "対照表の 1 行",
+      "description": "機械で確かめられた対応だけを載せる。確定できない対応は行ごと出さず、保留として開示する。",
+      "type": "object",
+      "properties": {
+        "utteranceId": { "$ref": "#/$defs/utteranceId" },
+        "legacyUtteranceId": { "$ref": "#/$defs/legacyUtteranceId" },
+        "ndlIssueId": {
+          "title": "国会会議録の会議録 ID",
+          "description": "国会は収録しないが、参照するときは国立国会図書館の ID を正とする。",
+          "type": "string"
+        },
+        "ndlSpeechId": {
+          "title": "国会会議録の発言 ID",
+          "type": "string"
+        },
+        "wikidataId": {
+          "title": "Wikidata 項目 ID",
+          "type": "string",
+          "pattern": "^Q[0-9]+$"
+        },
+        "source": { "$ref": "#/$defs/sourceAnchor" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "type": "object",
+  "properties": {
+    "lgcode": { "$ref": "#/$defs/lgcode" },
+    "councilId": { "$ref": "#/$defs/councilId" },
+    "meetingId": { "$ref": "#/$defs/meetingId" },
+    "utteranceId": { "$ref": "#/$defs/anyUtteranceId" },
+    "personId": { "$ref": "#/$defs/personId" }
+  },
+  "additionalProperties": true
+}

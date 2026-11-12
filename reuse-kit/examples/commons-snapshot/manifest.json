@@ -1,0 +1,32 @@
+{
+  "frozen_at": "2026-11-12T22:51:08.752087+09:00",
+  "source_kind": "既存ローカル公開用ファイル。現在の本番応答ではありません",
+  "network_calls": 0,
+  "bq_queries": 0,
+  "model_calls": 0,
+  "scope": "収録範囲・ID仕様の再利用手順。発言本文・原本の照合ではありません",
+  "conditions": "元ファイルのライセンス表示を保持。会議録原文への一律適用はしません",
+  "files": [
+    {
+      "name": "coverage.json",
+      "bytes": 523081,
+      "sha256": "6b93ce6d486d92ea7b2aca5290746f75f37031a7c6b3373eeada8330f4c9419c"
+    },
+    {
+      "name": "coverage-v1.json",
+      "bytes": 8830,
+      "sha256": "ea833366c2c199f76128e0861b026ebc07218c6319687c4c16a99d2b4ec5a711"
+    },
+    {
+      "name": "id-v1.json",
+      "bytes": 4871,
+      "sha256": "a3de19f7b10bca1f484be5c9a6725e3db61b2296360a19dfefaea48e19818791"
+    },
+    {
+      "name": "acquisition-progress.json",
+      "bytes": 1315021,
+      "sha256": "ad5a3e08ba115fbed74f16e12efcdc2e0bb8b0c21c712e1a3ef9fb0e2b060df7"
+    }
+  ],
+  "provenance": "公開用ファイルの固定コピー。作業用ファイルの絶対パスはこの公開候補へ含めていません。"
+}
